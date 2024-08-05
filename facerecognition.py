@@ -45,12 +45,14 @@ while True:
     sadimg = cv2.cvtColor(i, cv2.COLOR_BGR2GRAY)
     face = facedet.detectMultiScale(sadimg, 1.3, 5)
     for x, y, w, h in face:
-        cv2.rectangle(i, (x,y),(x+w, y+h), (255,255,255), 3)
+        cv2.rectangle(i, (x,y),(x+w, y+h), (255,255,55), 3)
         values = sadimg[y:y+h, x:x+w]
         newface = cv2.resize(values, (width,height))
 
         prediction, confidence =  model.predict(newface)
         print(prediction)
+
+        cv2.putText(i, names[prediction] + str(round(confidence, 1)), (x, y - 5 ), cv2.FONT_HERSHEY_COMPLEX, 2, (255,255,55) )
 
     cv2.imshow('...', i)
     key = cv2.waitKey(10)
